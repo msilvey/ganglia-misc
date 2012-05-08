@@ -2,11 +2,11 @@ class graphite::common {
 
  $build_dir = "/tmp"
 
- $whisper_url = "http://graphite.wikidot.com/local--files/downloads/whisper-0.9.6.tar.gz"
+ $whisper_url = "http://graphite.wikidot.com/local--files/downloads/whisper-0.9.9.tar.gz"
 
  $whisper_loc = "$build_dir/whisper.tar.gz"
 
- $webapp_url = "http://graphite.wikidot.com/local--files/downloads/graphite-web-0.9.6.tar.gz"
+ $webapp_url = "http://graphite.wikidot.com/local--files/downloads/graphite-web-0.9.9.tar.gz"
   
  $webapp_loc = "$build_dir/graphite-web.tar.gz"
 
@@ -18,7 +18,7 @@ class graphite::common {
 
    exec { "install-whisper":
         path => ["/bin", "/usr/bin", "/usr/sbin"],
-        command => "cd $build_dir ; tar -zxvf $whisper_loc ; cd whisper-0.9.6 ; python setup.py install",
+        command => "cd $build_dir ; tar -zxvf $whisper_loc ; cd whisper-0.9.9 ; python setup.py install",
         subscribe => Exec[download-graphite-whisper],
         refreshonly => true
    }
@@ -37,7 +37,7 @@ class graphite::common {
 
    exec { "install-webapp":
         path => ["/bin", "/usr/bin", "/usr/sbin"],
-        command => "cd $build_dir ; tar -zxvf $webapp_loc ; cd graphite-web-0.9.6 ;  patch -p0 < $build_dir/graphite.diff ; python setup.py install",
+        command => "cd $build_dir ; tar -zxvf $webapp_loc ; cd graphite-web-0.9.9 ;  patch -p0 < $build_dir/graphite.diff ; python setup.py install",
 	require => Exec["download-ganglia-graphite-diff"],
         subscribe => Exec[download-graphite-whisper],
 	creates => "/opt/graphite"
